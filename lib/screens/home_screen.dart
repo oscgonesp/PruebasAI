@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _elapsed = null;
     });
 
-    final picked = await FilePicker.platform.pickFiles(
+    final picked = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: const ['m4a', 'mp3', 'wav', 'aac', 'ogg', 'flac', 'opus'],
       allowMultiple: false,
