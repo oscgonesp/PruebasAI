@@ -43,11 +43,16 @@ class _HomeScreenState extends State<HomeScreen> {
       _elapsed = null;
     });
 
-    final picked = await FilePicker.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: const ['m4a', 'mp3', 'wav', 'aac', 'ogg', 'flac', 'opus'],
-      allowMultiple: false,
-    );
+    FilePickerResult? picked;
+    try {
+      picked = await FilePicker.pickFiles(
+        type: FileType.audio,
+        allowMultiple: false,
+      );
+    } catch (e) {
+      _setError('No se pudo abrir el selector de archivos: $e');
+      return;
+    }
     if (picked == null || picked.files.isEmpty) return;
 
     final platformFile = picked.files.single;
