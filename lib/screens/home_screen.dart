@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -43,27 +43,22 @@ class _HomeScreenState extends State<HomeScreen> {
       _elapsed = null;
     });
 
-    FilePickerResult? picked;
+    XFile? picked;
     try {
-      picked = await FilePicker.pickFiles(
-        type: FileType.audio,
-        allowMultiple: false,
+      picked = await openFile(
+        acceptedTypeGroups: const [
+          XTypeGroup(label: 'audio', mimeTypes: ['audio/*']),
+        ],
       );
     } catch (e) {
       _setError('No se pudo abrir el selector de archivos: $e');
       return;
     }
-    if (picked == null || picked.files.isEmpty) return;
+    if (picked == null) return;
 
-    final platformFile = picked.files.single;
-    final path = platformFile.path;
-    if (path == null) {
-      _setError('No se pudo acceder al archivo seleccionado.');
-      return;
-    }
-
+    final path = picked.path;
     setState(() {
-      _selectedFileName = platformFile.name;
+      _selectedFileName = picked!.name;
     });
 
     final stopwatch = Stopwatch()..start();
