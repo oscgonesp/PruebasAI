@@ -35,11 +35,17 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   whisper_ggml: ^1.7.0
-  file_picker: ">=8.3.3"
+  file_picker: ^11.0.0
   path_provider: ^2.1.5
   share_plus: ^13.1.0
   http: ^1.6.0
   crypto: ^3.0.7
+
+dependency_overrides:
+  # share_plus 13.x pins win32 ^6.0.1 and file_picker 11.x pins win32 ^5.9.0.
+  # Win32 only matters on Windows desktop, which we do not target, so we force
+  # the higher version to satisfy both at resolve time.
+  win32: ^6.0.1
 
 dev_dependencies:
   flutter_test:
